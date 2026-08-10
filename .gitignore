@@ -19,3 +19,8 @@ serve_local.mjs
 # pnpm 本地存储（不推送）
 .pnpm-store/
 .github/
+
+# 临时分析/备份文件
+analyze_runtime.py
+build_analysis.json
+backup/

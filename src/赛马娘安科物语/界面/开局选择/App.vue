@@ -145,7 +145,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import _ from 'lodash';
 import { useDataStore } from './store';
 
 const store = useDataStore();
