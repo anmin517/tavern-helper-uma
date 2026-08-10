@@ -1,0 +1,20 @@
+node_modules
+
+.DS_Store
+Thumbs.db
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+auto-imports.d.ts
+components.d.ts
+
+# 本地环境配置（不推送）
+.npmrc
+serve_local.mjs
+
+# pnpm 本地存储（不推送）
+.pnpm-store/

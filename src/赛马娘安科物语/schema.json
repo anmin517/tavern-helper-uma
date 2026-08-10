@@ -1,0 +1,710 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "系统": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "当前阶段": {
+          "default": "开局选择",
+          "type": "string",
+          "enum": [
+            "开局选择",
+            "养成",
+            "赛前",
+            "比赛",
+            "结算"
+          ]
+        },
+        "当前视角": {
+          "default": "训练员",
+          "type": "string",
+          "enum": [
+            "训练员",
+            "马娘"
+          ]
+        },
+        "开局身份": {
+          "default": "训练员",
+          "type": "string",
+          "enum": [
+            "训练员",
+            "马娘"
+          ]
+        },
+        "担当类型": {
+          "default": "自定义",
+          "type": "string",
+          "enum": [
+            "原作角色",
+            "自定义",
+            "无"
+          ]
+        },
+        "周期": {
+          "default": 1,
+          "type": "number"
+        },
+        "日期": {
+          "default": "",
+          "type": "string"
+        },
+        "当前赛事": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "主角": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "姓名": {
+          "default": "",
+          "type": "string"
+        },
+        "是否原作": {
+          "default": false,
+          "type": "boolean"
+        },
+        "原作来源": {
+          "default": "",
+          "type": "string"
+        },
+        "等级": {
+          "default": 1,
+          "type": "number"
+        },
+        "经验值": {
+          "default": 0,
+          "type": "number"
+        },
+        "五维": {
+          "default": {
+            "速度": 0,
+            "耐力": 0,
+            "力量": 0,
+            "毅力": 0,
+            "智慧": 0
+          },
+          "type": "object",
+          "properties": {
+            "速度": {
+              "default": 0,
+              "type": "number"
+            },
+            "耐力": {
+              "default": 0,
+              "type": "number"
+            },
+            "力量": {
+              "default": 0,
+              "type": "number"
+            },
+            "毅力": {
+              "default": 0,
+              "type": "number"
+            },
+            "智慧": {
+              "default": 0,
+              "type": "number"
+            }
+          }
+        },
+        "体力": {
+          "default": 100,
+          "type": "number"
+        },
+        "干劲": {
+          "default": 50,
+          "type": "number"
+        },
+        "粉丝数": {
+          "default": 0,
+          "type": "number"
+        },
+        "状态": {
+          "default": "正常",
+          "type": "string",
+          "enum": [
+            "正常",
+            "疲惫",
+            "受伤",
+            "低干劲"
+          ]
+        },
+        "羁绊": {
+          "default": 0,
+          "type": "number"
+        },
+        "资质": {
+          "default": {
+            "场地适性": {
+              "草地": "A",
+              "泥地": "C"
+            },
+            "距离适性": {
+              "短距离": "C",
+              "英里": "B",
+              "中距离": "A",
+              "长距离": "B"
+            },
+            "脚质适性": {
+              "逃": "C",
+              "先行": "A",
+              "差": "B",
+              "追": "C"
+            }
+          },
+          "type": "object",
+          "properties": {
+            "场地适性": {
+              "default": {
+                "草地": "A",
+                "泥地": "C"
+              },
+              "type": "object",
+              "properties": {
+                "草地": {
+                  "default": "A",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "泥地": {
+                  "default": "C",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                }
+              }
+            },
+            "距离适性": {
+              "default": {
+                "短距离": "C",
+                "英里": "B",
+                "中距离": "A",
+                "长距离": "B"
+              },
+              "type": "object",
+              "properties": {
+                "短距离": {
+                  "default": "C",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "英里": {
+                  "default": "B",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "中距离": {
+                  "default": "A",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "长距离": {
+                  "default": "B",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                }
+              }
+            },
+            "脚质适性": {
+              "default": {
+                "逃": "C",
+                "先行": "A",
+                "差": "B",
+                "追": "C"
+              },
+              "type": "object",
+              "properties": {
+                "逃": {
+                  "default": "C",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "先行": {
+                  "default": "A",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "差": {
+                  "default": "B",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                },
+                "追": {
+                  "default": "C",
+                  "type": "string",
+                  "enum": [
+                    "S",
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E",
+                    "F",
+                    "G"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "技能": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {
+              "掌握度": 0
+            },
+            "type": "object",
+            "properties": {
+              "掌握度": {
+                "default": 0,
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "赛事": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "名称": {
+          "default": "",
+          "type": "string"
+        },
+        "距离类型": {
+          "default": "中距离",
+          "type": "string",
+          "enum": [
+            "短距离",
+            "英里",
+            "中距离",
+            "长距离"
+          ]
+        },
+        "场地": {
+          "default": "草地",
+          "type": "string",
+          "enum": [
+            "草地",
+            "泥地"
+          ]
+        },
+        "等级": {
+          "default": "未胜利",
+          "type": "string",
+          "enum": [
+            "未胜利",
+            "公开赛",
+            "G3",
+            "G2",
+            "G1"
+          ]
+        },
+        "节点": {
+          "default": 0,
+          "type": "number"
+        },
+        "结果": {
+          "default": "未出赛",
+          "type": "string",
+          "enum": [
+            "未出赛",
+            "完赛",
+            "优胜",
+            "大败"
+          ]
+        },
+        "阶段对抗": {
+          "default": {
+            "前": 0,
+            "中": 0,
+            "后": 0
+          },
+          "type": "object",
+          "properties": {
+            "前": {
+              "default": 0,
+              "type": "number"
+            },
+            "中": {
+              "default": 0,
+              "type": "number"
+            },
+            "后": {
+              "default": 0,
+              "type": "number"
+            }
+          }
+        },
+        "耐力余量": {
+          "default": 0,
+          "type": "number"
+        },
+        "消耗系数": {
+          "default": 1,
+          "type": "number"
+        },
+        "对手": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {
+              "五维": {
+                "速度": 0,
+                "耐力": 0,
+                "力量": 0,
+                "毅力": 0,
+                "智慧": 0
+              },
+              "资质": {
+                "场地适性": {
+                  "草地": "B",
+                  "泥地": "C"
+                },
+                "距离适性": {
+                  "短距离": "C",
+                  "英里": "B",
+                  "中距离": "B",
+                  "长距离": "C"
+                },
+                "脚质适性": {
+                  "逃": "C",
+                  "先行": "B",
+                  "差": "B",
+                  "追": "C"
+                }
+              },
+              "干劲": 50
+            },
+            "type": "object",
+            "properties": {
+              "五维": {
+                "default": {
+                  "速度": 0,
+                  "耐力": 0,
+                  "力量": 0,
+                  "毅力": 0,
+                  "智慧": 0
+                },
+                "type": "object",
+                "properties": {
+                  "速度": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "耐力": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "力量": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "毅力": {
+                    "default": 0,
+                    "type": "number"
+                  },
+                  "智慧": {
+                    "default": 0,
+                    "type": "number"
+                  }
+                }
+              },
+              "资质": {
+                "default": {
+                  "场地适性": {
+                    "草地": "B",
+                    "泥地": "C"
+                  },
+                  "距离适性": {
+                    "短距离": "C",
+                    "英里": "B",
+                    "中距离": "B",
+                    "长距离": "C"
+                  },
+                  "脚质适性": {
+                    "逃": "C",
+                    "先行": "B",
+                    "差": "B",
+                    "追": "C"
+                  }
+                },
+                "type": "object",
+                "properties": {
+                  "场地适性": {
+                    "default": {
+                      "草地": "B",
+                      "泥地": "C"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "草地": {
+                        "default": "B",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "泥地": {
+                        "default": "C",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      }
+                    }
+                  },
+                  "距离适性": {
+                    "default": {
+                      "短距离": "C",
+                      "英里": "B",
+                      "中距离": "B",
+                      "长距离": "C"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "短距离": {
+                        "default": "C",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "英里": {
+                        "default": "B",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "中距离": {
+                        "default": "B",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "长距离": {
+                        "default": "C",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      }
+                    }
+                  },
+                  "脚质适性": {
+                    "default": {
+                      "逃": "C",
+                      "先行": "B",
+                      "差": "B",
+                      "追": "C"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "逃": {
+                        "default": "C",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "先行": {
+                        "default": "B",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "差": {
+                        "default": "B",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      },
+                      "追": {
+                        "default": "C",
+                        "type": "string",
+                        "enum": [
+                          "S",
+                          "A",
+                          "B",
+                          "C",
+                          "D",
+                          "E",
+                          "F",
+                          "G"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "干劲": {
+                "default": 50,
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
