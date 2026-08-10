@@ -89,7 +89,7 @@
         <div v-else class="custom-form">
           <label class="field">
             <span class="field-label"><i class="fa-solid fa-tag"></i> 姓名</span>
-            <input v-model="custom_name" class="text-input" placeholder="例如：天野遥" maxlength="12" />
+            <input v-model="custom_name" class="text-input" placeholder="输入你的马娘名字" maxlength="12" />
           </label>
 
           <div class="field">
@@ -207,8 +207,8 @@ function pickOriginal(ch: OriginChar) {
 /* ---------- 自定义表单 ---------- */
 const stat_keys = ['速度', '耐力', '力量', '毅力', '智慧'];
 const stat_labels: Record<string, string> = { 速度: '速度', 耐力: '耐力', 力量: '力量', 毅力: '毅力', 智慧: '智慧' };
-const custom_name = ref('天野遥');
-const custom_goal = ref('称霸三冠');
+const custom_name = ref('');
+const custom_goal = ref('');
 const custom_stats = reactive<Record<string, number>>({ 速度: 400, 耐力: 300, 力量: 350, 毅力: 300, 智慧: 350 });
 
 const apt_levels = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
