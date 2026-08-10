@@ -18,7 +18,17 @@
         <div class="done-row"><span>五维</span><strong>{{ done_stats }}</strong></div>
         <div v-if="done_goal" class="done-row"><span>梦想</span><strong>{{ done_goal }}</strong></div>
       </div>
-      <p class="done-tip"><i class="fa-solid fa-circle-info"></i> 档案已写入变量。请直接在对话中回复，开始你的物语！</p>
+
+      <!-- 开场白预览：将作为你的消息发送 -->
+      <div class="narrative-box">
+        <div class="narrative-head"><i class="fa-solid fa-feather-pointed"></i> 你的开场白（将作为消息发送）</div>
+        <p class="narrative-text">{{ narrative }}</p>
+      </div>
+
+      <button v-if="!sent" class="confirm-btn" type="button" @click="sendNarrative">
+        <i class="fa-solid fa-paper-plane"></i> 发送开场白，开始物语
+      </button>
+      <p v-else class="sent-tip"><i class="fa-solid fa-check"></i> 开场白已发送，故事即将开始…</p>
     </div>
 
     <!-- 创建表单 -->
@@ -319,6 +329,44 @@ function confirm() {
   s.赛事.节点 = 0;
 
   done.value = true;
+}
+
+/* ---------- 发送叙事开场白（作为玩家消息） ---------- */
+const sent = ref(false);
+const narrative = computed(() => {
+  const name = store.data.主角.姓名 || '我';
+  if (is_trainer.value) {
+    return `四月，特雷森学园。樱花在中央大道两侧落成浅粉色的地毯，空气里飘着青草与泥土的味道。
+
+我推开了事务所的门。窗边的办公桌上摊着一份《担当契约书》，签字栏还空着——今天，我将迎来作为训练员的第一个重要决定。
+
+「……你就是我的训练员？」面前的赛马娘打量着我，眼神里既有戒备，又藏着期待。${name}——从这一刻起，我们成为了签约搭档。我会带着你，一起跑向最高的舞台。`;
+  }
+  return `四月，特雷森学园。我的蹄铁在柏油路上敲出清脆的声响，风从耳边掠过，带着青草与泥土的香气。
+
+今天是我作为赛马娘入学特雷森的第一天。站在大门口，我按住自己的左胸——那里跳动的，是继承自名马之魂的血液。我来这里，是为了三冠，那个只属于最顶尖赛马娘的荣誉。
+
+「我是你的训练员。」面前的男人语气平淡却莫名让人安心，「先说说看——你的梦想，是什么？」
+
+我深吸一口气，说出了我的名字：${name}。从这一刻起，我们成为了搭档。我会和训练员一起，向着最高的舞台奔跑。`;
+});
+
+function sendNarrative() {
+  if (sent.value) return;
+  try {
+    const name = is_trainer.value ? (store.data.主角.姓名 || '训练员') : '玩家';
+    SillyTavern.addOneMessage({
+      name,
+      is_user: true,
+      is_system: false,
+      mes: narrative.value,
+    });
+    SillyTavern.generate();
+    sent.value = true;
+  } catch (e) {
+    console.error('发送开场白失败', e);
+    alert('发送失败：请复制上方开场白手动发送');
+  }
 }
 </script>
 
@@ -715,6 +763,40 @@ function confirm() {
   font-size: 0.8rem;
   color: var(--c-muted);
   i { color: var(--c-warning); margin-right: 4px; }
+}
+
+.narrative-box {
+  width: 100%;
+  max-width: 440px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-surface-alt);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.narrative-head {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--c-primary-dark);
+  margin-bottom: 6px;
+  i { margin-right: 4px; }
+}
+
+.narrative-text {
+  font-size: 0.82rem;
+  color: var(--c-ink);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.sent-tip {
+  font-size: 0.85rem;
+  color: var(--c-primary-dark);
+  font-weight: 700;
+  i { margin-right: 5px; }
 }
 
 @media (max-width: 560px) {
