@@ -18,3 +18,4 @@ serve_local.mjs
 
 # pnpm 本地存储（不推送）
 .pnpm-store/
+.github/
