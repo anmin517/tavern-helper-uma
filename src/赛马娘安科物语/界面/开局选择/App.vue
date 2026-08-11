@@ -52,6 +52,33 @@
         </div>
       </section>
 
+      <!-- 训练员配置（仅马娘身份） -->
+      <section v-if="!is_trainer" class="cc-step">
+        <h3 class="step-title"><span class="step-no">★</span>训练员配置</h3>
+        <div class="type-grid">
+          <button
+            class="type-card"
+            :class="{ active: has_trainer }"
+            type="button"
+            @click="has_trainer = true"
+          >
+            <i class="fa-solid fa-user-tie"></i>
+            <b>有训练员</b>
+            <span>由学园指派训练员，陪伴训练与比赛</span>
+          </button>
+          <button
+            class="type-card"
+            :class="{ active: !has_trainer }"
+            type="button"
+            @click="has_trainer = false"
+          >
+            <i class="fa-solid fa-person-running"></i>
+            <b>无训练员</b>
+            <span>独行马娘，自主训练、自行参赛</span>
+          </button>
+        </div>
+      </section>
+
       <!-- 步骤2：配置 -->
       <section v-if="selected_type !== 'none'" class="cc-step">
         <h3 class="step-title"><span class="step-no">2</span>{{ step2_label }}</h3>
@@ -155,6 +182,7 @@ import { useDataStore } from './store';
 const store = useDataStore();
 
 const is_trainer = computed(() => store.data.系统.当前视角 === '训练员');
+const has_trainer = ref(true); // 马娘身份时：是否有训练员（无训练员=独行马娘）
 
 const title_text = computed(() => (is_trainer.value ? '担当契约书' : '梦想起跑线'));
 const subtitle_text = computed(() =>
@@ -279,6 +307,7 @@ const done_goal = ref('');
 function confirm() {
   const s = store.data;
   s.系统.开局身份 = s.系统.当前视角;
+  s.系统.有训练员 = is_trainer.value ? true : has_trainer.value;
   s.系统.当前阶段 = '开局选择';
 
   if (selected_type.value === 'none') {
@@ -375,6 +404,15 @@ const narrative = computed(() => {
 「……你就是我的训练员？」面前的赛马娘打量着我，眼神里既有戒备，又藏着期待。${name}——从这一刻起，我们成为了签约搭档。我会带着你，一起跑向最高的舞台。
 
 签约完成。请开始规划她的第一周训练——先从基础的速度训练开始，还是先做体能摸底？`;
+  }
+  if (!has_trainer.value) {
+    return `四月，特雷森学园。我的蹄铁在柏油路上敲出清脆的声响，风从耳边掠过，带着青草与泥土的香气。
+
+今天是我作为赛马娘入学特雷森的第一天。站在大门口，我按住自己的左胸——那里跳动的，是继承自名马之魂的血液。我来这里，是为了三冠，那个只属于最顶尖赛马娘的荣誉。
+
+没有训练员，没有引路人——从今天起，一切都要靠自己。训练计划自己定，赛事自己报名，对手自己战胜。${name}，这就是我的选择。
+
+入学手续完成。我翻开训练手册，开始规划自己的第一周训练——先从基础的速度训练开始，还是先做体能摸底？`;
   }
   return `四月，特雷森学园。我的蹄铁在柏油路上敲出清脆的声响，风从耳边掠过，带着青草与泥土的香气。
 

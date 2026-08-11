@@ -6,6 +6,7 @@ export const Schema = z.object({
     当前阶段: z.enum(['开局选择', '养成', '日常', '赛前', '比赛', '结算']).prefault('开局选择'),
     当前视角: z.enum(['训练员', '马娘']).prefault('训练员'),
     开局身份: z.enum(['训练员', '马娘']).prefault('训练员'),
+    有训练员: z.boolean().prefault(true),
     担当类型: z.enum(['原作角色', '自定义', '无']).prefault('自定义'),
     周期: z.coerce.number().transform(v => _.clamp(v, 1, 999)).prefault(1),
     日期: z.string().prefault(''),

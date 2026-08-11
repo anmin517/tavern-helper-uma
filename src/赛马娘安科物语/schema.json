@@ -34,6 +34,10 @@
             "马娘"
           ]
         },
+        "有训练员": {
+          "default": true,
+          "type": "boolean"
+        },
         "担当类型": {
           "default": "自定义",
           "type": "string",
