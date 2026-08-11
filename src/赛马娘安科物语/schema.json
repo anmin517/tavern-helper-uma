@@ -53,6 +53,65 @@
         "当前赛事": {
           "default": "",
           "type": "string"
+        },
+        "最近检定": {
+          "default": {
+            "名称": "",
+            "类型": "",
+            "目标值": 0,
+            "骰值": 0,
+            "结果": "成功",
+            "修正": "",
+            "对抗阶段": "",
+            "备注": ""
+          },
+          "type": "object",
+          "properties": {
+            "名称": {
+              "default": "",
+              "type": "string"
+            },
+            "类型": {
+              "default": "",
+              "type": "string"
+            },
+            "目标值": {
+              "default": 0,
+              "type": "number"
+            },
+            "骰值": {
+              "default": 0,
+              "type": "number"
+            },
+            "结果": {
+              "default": "成功",
+              "type": "string",
+              "enum": [
+                "大成功",
+                "成功",
+                "普通失败",
+                "大失败"
+              ]
+            },
+            "修正": {
+              "default": "",
+              "type": "string"
+            },
+            "对抗阶段": {
+              "default": "",
+              "type": "string",
+              "enum": [
+                "前",
+                "中",
+                "后",
+                ""
+              ]
+            },
+            "备注": {
+              "default": "",
+              "type": "string"
+            }
+          }
         }
       }
     },

@@ -1,0 +1,24 @@
+:root {
+  --c-primary: #2e9e6b;
+  --c-primary-dark: #1e7a50;
+  --c-danger: #d64545;
+  --c-warning: #e8a13c;
+  --c-success: #2e9e6b;
+  --c-surface: #f7f5ef;
+  --c-surface-alt: #fffdf7;
+  --c-border: #ddd6c8;
+  --c-track: #e8e2d4;
+  --c-muted: #8b8578;
+  --font-num: 'Consolas', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Sarasa Gothic', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: transparent;
+}
