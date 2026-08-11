@@ -47,112 +47,158 @@
 
     <!-- 展开区 -->
     <div v-if="expanded" class="sb-body">
-      <!-- 五维面板 -->
-      <section class="sb-section">
-        <h3 class="sb-section-title"><i class="fa-solid fa-gauge-high"></i> 五维</h3>
-        <div class="stat-grid">
-          <div v-for="(stat, key) in stats" :key="key" class="stat-cell">
-            <span class="stat-name">{{ stat.label }}</span>
-            <div class="stat-track">
-              <div class="stat-fill" :class="key" :style="{ width: stat.pct + '%' }"></div>
-            </div>
-            <span class="stat-value">{{ stat.value }}</span>
-          </div>
-        </div>
-        <div class="stat-total">
-          五维总值：<strong>{{ stat_total }}</strong>
-          <span class="total-hint">/ 6000</span>
-        </div>
-      </section>
+      <!-- Tab 切换 -->
+      <nav class="sb-tabs">
+        <button
+          v-for="t in tabs"
+          :key="t.key"
+          class="sb-tab"
+          :class="{ active: active_tab === t.key }"
+          @click="active_tab = t.key"
+        >
+          <i :class="t.icon"></i> {{ t.label }}
+        </button>
+      </nav>
 
-      <!-- 适性面板 -->
-      <section class="sb-section">
-        <h3 class="sb-section-title"><i class="fa-solid fa-tags"></i> 适性</h3>
-        <div class="apt-grid">
-          <div class="apt-group">
-            <span class="apt-group-name">场地</span>
-            <span v-for="(v, k) in store.data.主角.资质.场地适性" :key="k" class="apt-chip">
-              <b>{{ k }}</b><em>{{ v }}</em>
-            </span>
-          </div>
-          <div class="apt-group">
-            <span class="apt-group-name">距离</span>
-            <span v-for="(v, k) in store.data.主角.资质.距离适性" :key="k" class="apt-chip">
-              <b>{{ k }}</b><em>{{ v }}</em>
-            </span>
-          </div>
-          <div class="apt-group">
-            <span class="apt-group-name">脚质</span>
-            <span v-for="(v, k) in store.data.主角.资质.脚质适性" :key="k" class="apt-chip">
-              <b>{{ k }}</b><em>{{ v }}</em>
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 技能列表 -->
-      <section class="sb-section">
-        <h3 class="sb-section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> 技能</h3>
-        <div v-if="!_.isEmpty(store.data.主角.技能)" class="skill-list">
-          <div v-for="(info, name) in store.data.主角.技能" :key="name" class="skill-row">
-            <span class="skill-name">{{ name }}</span>
-            <div class="skill-track">
-              <div
-                class="skill-fill"
-                :class="{ high: info.掌握度 >= 60 }"
-                :style="{ width: info.掌握度 + '%' }"
-              ></div>
-            </div>
-            <span class="skill-value">{{ info.掌握度 }}%</span>
-          </div>
-        </div>
-        <div v-else class="empty-note">尚未习得技能，训练中偶有领悟</div>
-      </section>
-
-      <!-- 赛事面板 -->
-      <section class="sb-section">
-        <h3 class="sb-section-title"><i class="fa-solid fa-flag-checkered"></i> 赛事</h3>
-        <div v-if="store.data.赛事.名称" class="race-panel">
-          <div class="race-head">
-            <strong>{{ store.data.赛事.名称 }}</strong>
-            <span class="race-tag">{{ store.data.赛事.等级 }}</span>
-            <span class="race-tag">{{ store.data.赛事.距离类型 }}</span>
-            <span class="race-tag">{{ store.data.赛事.场地 }}</span>
-          </div>
-          <div class="race-meta">
-            <span>阶段对抗</span>
-            <div class="stage-row">
-              <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.前)">前 {{ store.data.赛事.阶段对抗.前 }}</span>
-              <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.中)">中 {{ store.data.赛事.阶段对抗.中 }}</span>
-              <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.后)">后 {{ store.data.赛事.阶段对抗.后 }}</span>
+      <!-- 基础页 -->
+      <template v-if="active_tab === 'base'">
+        <!-- 五维面板 -->
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-gauge-high"></i> 五维</h3>
+          <div class="stat-grid">
+            <div v-for="(stat, key) in stats" :key="key" class="stat-cell">
+              <span class="stat-name">{{ stat.label }}</span>
+              <div class="stat-track">
+                <div class="stat-fill" :class="key" :style="{ width: stat.pct + '%' }"></div>
+              </div>
+              <span class="stat-value">{{ stat.value }}</span>
             </div>
           </div>
-          <div class="bar-row">
-            <span class="bar-label"><i class="fa-solid fa-battery-three-quarters"></i> 耐力余量</span>
-            <div class="bar-track">
-              <div class="bar-fill stamina" :style="{ width: stamina_remain_pct + '%' }"></div>
-            </div>
-            <span class="bar-value">{{ store.data.赛事.耐力余量 }}</span>
+          <div class="stat-total">
+            五维总值：<strong>{{ stat_total }}</strong>
+            <span class="total-hint">/ 6000</span>
           </div>
-          <div v-if="store.data.赛事.结果 !== '未出赛'" class="race-result">
-            最近结果：<strong>{{ store.data.赛事.结果 }}</strong>
-          </div>
-        </div>
-        <div v-else class="empty-note">当前无赛事，可在赛前阶段报名</div>
-      </section>
+        </section>
 
-      <!-- 成就面板 -->
-      <section class="sb-section">
-        <h3 class="sb-section-title"><i class="fa-solid fa-trophy"></i> 成就 <span class="ach-count">{{ achievements.length }}</span></h3>
-        <div v-if="achievements.length" class="ach-list">
-          <div v-for="a in achievements" :key="a.name" class="ach-item">
-            <i class="fa-solid fa-medal"></i>
-            <span class="ach-name">{{ a.name }}</span>
-            <span class="ach-year">{{ a.year }}</span>
+        <!-- 适性面板 -->
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-tags"></i> 适性</h3>
+          <div class="apt-grid">
+            <div class="apt-group">
+              <span class="apt-group-name">场地</span>
+              <span v-for="(v, k) in store.data.主角.资质.场地适性" :key="k" class="apt-chip">
+                <b>{{ k }}</b><em>{{ v }}</em>
+              </span>
+            </div>
+            <div class="apt-group">
+              <span class="apt-group-name">距离</span>
+              <span v-for="(v, k) in store.data.主角.资质.距离适性" :key="k" class="apt-chip">
+                <b>{{ k }}</b><em>{{ v }}</em>
+              </span>
+            </div>
+            <div class="apt-group">
+              <span class="apt-group-name">脚质</span>
+              <span v-for="(v, k) in store.data.主角.资质.脚质适性" :key="k" class="apt-chip">
+                <b>{{ k }}</b><em>{{ v }}</em>
+              </span>
+            </div>
           </div>
-        </div>
-        <div v-else class="empty-note">尚未达成成就——去冲击经典三冠、八大競走吧！</div>
-      </section>
+        </section>
+
+        <!-- 赛事面板 -->
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-flag-checkered"></i> 赛事</h3>
+          <div v-if="store.data.赛事.名称" class="race-panel">
+            <div class="race-head">
+              <strong>{{ store.data.赛事.名称 }}</strong>
+              <span class="race-tag">{{ store.data.赛事.等级 }}</span>
+              <span class="race-tag">{{ store.data.赛事.距离类型 }}</span>
+              <span class="race-tag">{{ store.data.赛事.场地 }}</span>
+            </div>
+            <div class="race-meta">
+              <span>阶段对抗</span>
+              <div class="stage-row">
+                <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.前)">前 {{ store.data.赛事.阶段对抗.前 }}</span>
+                <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.中)">中 {{ store.data.赛事.阶段对抗.中 }}</span>
+                <span class="stage-chip" :class="stageClass(store.data.赛事.阶段对抗.后)">后 {{ store.data.赛事.阶段对抗.后 }}</span>
+              </div>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label"><i class="fa-solid fa-battery-three-quarters"></i> 耐力余量</span>
+              <div class="bar-track">
+                <div class="bar-fill stamina" :style="{ width: stamina_remain_pct + '%' }"></div>
+              </div>
+              <span class="bar-value">{{ store.data.赛事.耐力余量 }}</span>
+            </div>
+            <div v-if="store.data.赛事.结果 !== '未出赛'" class="race-result">
+              最近结果：<strong>{{ store.data.赛事.结果 }}</strong>
+            </div>
+          </div>
+          <div v-else class="empty-note">当前无赛事，可在赛前阶段报名</div>
+        </section>
+
+        <!-- 成就面板 -->
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-trophy"></i> 成就 <span class="ach-count">{{ achievements.length }}</span></h3>
+          <div v-if="achievements.length" class="ach-list">
+            <div v-for="a in achievements" :key="a.name" class="ach-item">
+              <i class="fa-solid fa-medal"></i>
+              <span class="ach-name">{{ a.name }}</span>
+              <span class="ach-year">{{ a.year }}</span>
+            </div>
+          </div>
+          <div v-else class="empty-note">尚未达成成就——去冲击经典三冠、八大競走吧！</div>
+        </section>
+      </template>
+
+      <!-- 关系页：其他马娘好感 + 各自技能 -->
+      <template v-else-if="active_tab === 'relation'">
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-heart"></i> 马娘关系 <span class="ach-count">{{ relations.length }}</span></h3>
+          <div v-if="relations.length" class="rel-list">
+            <div v-for="rel in relations" :key="rel.name" class="rel-card">
+              <div class="rel-head">
+                <span class="rel-name">{{ rel.name }}</span>
+                <span class="rel-bond" :class="bondTone(rel.好感)">{{ rel.好感 }}</span>
+              </div>
+              <div class="bar-row rel-bar">
+                <div class="bar-track">
+                  <div class="bar-fill bond" :style="{ width: rel.好感 + '%' }"></div>
+                </div>
+                <span class="bar-value"><small>好感</small></span>
+              </div>
+              <div v-if="rel.skills.length" class="rel-skills">
+                <span v-for="(sk, skName) in rel.skills" :key="skName" class="rel-skill" :class="{ high: sk.掌握度 >= 60 }">
+                  {{ skName }} <em>{{ sk.掌握度 }}%</em>
+                </span>
+              </div>
+              <div v-else class="rel-noskills">尚未了解其技能</div>
+            </div>
+          </div>
+          <div v-else class="empty-note">暂无认识的其他马娘——日常互动、比赛共斗会建立关系</div>
+        </section>
+      </template>
+
+      <!-- 技能页：主角技能 -->
+      <template v-else>
+        <section class="sb-section">
+          <h3 class="sb-section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> 技能 <span class="ach-count">{{ skill_count }}</span></h3>
+          <div v-if="!_.isEmpty(store.data.主角.技能)" class="skill-list">
+            <div v-for="(info, name) in store.data.主角.技能" :key="name" class="skill-row">
+              <span class="skill-name">{{ name }}</span>
+              <div class="skill-track">
+                <div
+                  class="skill-fill"
+                  :class="{ high: info.掌握度 >= 60 }"
+                  :style="{ width: info.掌握度 + '%' }"
+                ></div>
+              </div>
+              <span class="skill-value">{{ info.掌握度 }}%</span>
+            </div>
+          </div>
+          <div v-else class="empty-note">尚未习得技能，训练中偶有领悟</div>
+        </section>
+      </template>
     </div>
   </div>
 </template>
@@ -164,6 +210,13 @@ import { useDataStore } from './store';
 const store = useDataStore();
 
 const expanded = useLocalStorage<boolean>('uma_statusbar:expanded', true);
+const active_tab = useLocalStorage<string>('uma_statusbar:tab', 'base');
+
+const tabs = [
+  { key: 'base', label: '基础', icon: 'fa-solid fa-gauge-high' },
+  { key: 'relation', label: '关系', icon: 'fa-solid fa-heart' },
+  { key: 'skill', label: '技能', icon: 'fa-solid fa-wand-magic-sparkles' },
+];
 
 const is_race_phase = computed(() => store.data.系统.当前阶段 === '比赛');
 
@@ -206,6 +259,27 @@ const achievements = computed(() => {
       return x.name.localeCompare(y.name, 'zh');
     });
 });
+
+// 马娘关系列表：好感从高到低，含各自技能
+const relations = computed(() => {
+  const rel = store.data.主角.关系 || {};
+  return Object.entries(rel)
+    .map(([name, info]) => ({
+      name,
+      好感: Number(info?.好感 ?? 0),
+      skills: Object.entries(info?.技能 ?? {}) as [string, { 掌握度: number }][],
+    }))
+    .sort((a, b) => b.好感 - a.好感);
+});
+
+const skill_count = computed(() => Object.keys(store.data.主角.技能 || {}).length);
+
+function bondTone(v: number): string {
+  if (v >= 80) return 'deep';
+  if (v >= 50) return 'mid';
+  if (v >= 20) return 'low';
+  return 'cold';
+}
 
 function clamp_pct(v: number): number {
   return Math.max(0, Math.min(100, v));
@@ -380,6 +454,98 @@ function stageClass(v: number): string {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.sb-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 2px solid var(--c-border);
+  padding-bottom: 8px;
+}
+
+.sb-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface-alt);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--c-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  i { font-size: 0.72rem; }
+  &:hover { border-color: var(--c-primary); color: var(--c-primary-dark); }
+  &.active {
+    background: var(--c-primary);
+    border-color: var(--c-primary-dark);
+    color: #fff;
+  }
+}
+
+.rel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rel-card {
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--c-surface-alt);
+}
+
+.rel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .rel-name { font-weight: 800; font-size: 0.9rem; color: var(--c-primary-dark); }
+  .rel-bond {
+    font-family: var(--font-num);
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 2px 9px;
+    border-radius: 10px;
+    &.deep { background: #d9f2e4; color: #1e7a50; }
+    &.mid { background: #fdeeda; color: #b06e1a; }
+    &.low { background: #e6f1fb; color: #185fa5; }
+    &.cold { background: var(--c-track); color: var(--c-muted); }
+  }
+}
+
+.rel-bar {
+  margin-top: 6px;
+  .bar-value { width: auto; }
+}
+
+.rel-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.rel-skill {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--c-track);
+  color: var(--c-muted);
+  em { font-style: normal; font-family: var(--font-num); font-weight: 700; margin-left: 3px; }
+  &.high { background: #d9f2e4; color: #1e7a50; }
+}
+
+.rel-noskills {
+  margin-top: 8px;
+  font-size: 0.72rem;
+  color: var(--c-muted);
+  font-style: italic;
 }
 
 .sb-section {

@@ -12,6 +12,7 @@
           "enum": [
             "开局选择",
             "养成",
+            "日常",
             "赛前",
             "比赛",
             "结算"
@@ -359,6 +360,45 @@
           },
           "additionalProperties": {
             "type": "string"
+          }
+        },
+        "关系": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "default": {
+              "好感": 0,
+              "技能": {}
+            },
+            "type": "object",
+            "properties": {
+              "好感": {
+                "default": 0,
+                "type": "number"
+              },
+              "技能": {
+                "default": {},
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "default": {
+                    "掌握度": 0
+                  },
+                  "type": "object",
+                  "properties": {
+                    "掌握度": {
+                      "default": 0,
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

@@ -3,7 +3,7 @@
 
 export const Schema = z.object({
   系统: z.object({
-    当前阶段: z.enum(['开局选择', '养成', '赛前', '比赛', '结算']).prefault('开局选择'),
+    当前阶段: z.enum(['开局选择', '养成', '日常', '赛前', '比赛', '结算']).prefault('开局选择'),
     当前视角: z.enum(['训练员', '马娘']).prefault('训练员'),
     开局身份: z.enum(['训练员', '马娘']).prefault('训练员'),
     担当类型: z.enum(['原作角色', '自定义', '无']).prefault('自定义'),
@@ -52,6 +52,12 @@ export const Schema = z.object({
       掌握度: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
     }).prefault({ 掌握度: 0 })).prefault({}),
     成就: z.record(z.string(), z.string()).prefault({}),
+    关系: z.record(z.string(), z.object({
+      好感: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      技能: z.record(z.string(), z.object({
+        掌握度: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      }).prefault({ 掌握度: 0 })).prefault({}),
+    }).prefault({ 好感: 0, 技能: {} })).prefault({}),
   }).prefault({}),
 
   赛事: z.object({
