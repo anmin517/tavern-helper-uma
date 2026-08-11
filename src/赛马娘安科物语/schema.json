@@ -350,6 +350,16 @@
               }
             }
           }
+        },
+        "成就": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -360,6 +370,39 @@
         "名称": {
           "default": "",
           "type": "string"
+        },
+        "竞马场": {
+          "default": "",
+          "type": "string"
+        },
+        "天气": {
+          "default": "晴",
+          "type": "string",
+          "enum": [
+            "晴",
+            "阴",
+            "雨",
+            "大雨"
+          ]
+        },
+        "场地状况": {
+          "default": "良",
+          "type": "string",
+          "enum": [
+            "良",
+            "稍重",
+            "重",
+            "不良"
+          ]
+        },
+        "顺逆时针": {
+          "default": "左回",
+          "type": "string",
+          "enum": [
+            "左回",
+            "右回",
+            "直道"
+          ]
         },
         "距离类型": {
           "default": "中距离",

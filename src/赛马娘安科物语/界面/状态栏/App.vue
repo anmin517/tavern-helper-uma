@@ -140,6 +140,19 @@
         </div>
         <div v-else class="empty-note">当前无赛事，可在赛前阶段报名</div>
       </section>
+
+      <!-- 成就面板 -->
+      <section class="sb-section">
+        <h3 class="sb-section-title"><i class="fa-solid fa-trophy"></i> 成就 <span class="ach-count">{{ achievements.length }}</span></h3>
+        <div v-if="achievements.length" class="ach-list">
+          <div v-for="a in achievements" :key="a.name" class="ach-item">
+            <i class="fa-solid fa-medal"></i>
+            <span class="ach-name">{{ a.name }}</span>
+            <span class="ach-year">{{ a.year }}</span>
+          </div>
+        </div>
+        <div v-else class="empty-note">尚未达成成就——去冲击经典三冠、八大競走吧！</div>
+      </section>
     </div>
   </div>
 </template>
@@ -181,6 +194,17 @@ const stats = computed(() => {
 const stat_total = computed(() => {
   const w = store.data.主角.五维 || {};
   return (w.速度 ?? 0) + (w.耐力 ?? 0) + (w.力量 ?? 0) + (w.毅力 ?? 0) + (w.智慧 ?? 0);
+});
+
+// 成就列表（按达成年份倒序，同一年按名称排序）
+const achievements = computed(() => {
+  const a = store.data.主角.成就 || {};
+  return Object.entries(a)
+    .map(([name, year]) => ({ name, year: String(year) }))
+    .sort((x, y) => {
+      if (x.year !== y.year) return y.year.localeCompare(x.year, 'zh');
+      return x.name.localeCompare(y.name, 'zh');
+    });
 });
 
 function clamp_pct(v: number): number {
@@ -517,6 +541,44 @@ function stageClass(v: number): string {
   color: var(--c-muted);
   font-style: italic;
   padding: 6px 0;
+}
+
+.ach-count {
+  font-size: 0.72rem;
+  color: var(--c-warning);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.ach-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ach-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 3px 10px;
+  background: var(--c-surface-alt);
+  font-size: 0.78rem;
+  i { color: var(--c-warning); font-size: 0.72rem; }
+}
+
+.ach-name {
+  font-weight: 700;
+  color: var(--c-primary-dark);
+}
+
+.ach-year {
+  font-size: 0.68rem;
+  color: var(--c-muted);
+  font-family: var(--font-num);
+  border-left: 1px solid var(--c-border);
+  padding-left: 6px;
 }
 
 .race-panel {

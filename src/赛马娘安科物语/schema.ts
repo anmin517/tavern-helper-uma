@@ -51,10 +51,15 @@ export const Schema = z.object({
     技能: z.record(z.string(), z.object({
       掌握度: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
     }).prefault({ 掌握度: 0 })).prefault({}),
+    成就: z.record(z.string(), z.string()).prefault({}),
   }).prefault({}),
 
   赛事: z.object({
     名称: z.string().prefault(''),
+    竞马场: z.string().prefault(''),
+    天气: z.enum(['晴', '阴', '雨', '大雨']).prefault('晴'),
+    场地状况: z.enum(['良', '稍重', '重', '不良']).prefault('良'),
+    顺逆时针: z.enum(['左回', '右回', '直道']).prefault('左回'),
     距离类型: z.enum(['短距离', '英里', '中距离', '长距离']).prefault('中距离'),
     场地: z.enum(['草地', '泥地']).prefault('草地'),
     等级: z.enum(['未胜利', '公开赛', 'G3', 'G2', 'G1']).prefault('未胜利'),
