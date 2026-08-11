@@ -6,6 +6,17 @@
       <span v-if="checks.length" class="ck-count">共 {{ checks.length }} 次</span>
     </div>
 
+    <!-- 比赛状态条：名次/总人数 + 行进距离 -->
+    <div v-if="race" class="ck-race">
+      <div class="race-row">
+        <span class="race-rank"><i class="fa-solid fa-medal"></i> {{ race.rank }}<small>/{{ race.total }} 着</small></span>
+        <span class="race-dist"><i class="fa-solid fa-ruler-horizontal"></i> {{ race.distance }}m<small>/{{ race.total_distance }}m</small></span>
+      </div>
+      <div class="race-progress">
+        <div class="race-bar" :style="{ width: race_pct + '%' }"></div>
+      </div>
+    </div>
+
     <!-- 多检定竖排 -->
     <div v-if="checks.length" class="ck-body stack">
       <div v-for="(ck, i) in checks" :key="i" class="ck-item">
@@ -61,10 +72,15 @@
 
 <script setup lang="ts">
 import _ from 'lodash';
-import { parseChecksFromMessage, getCurrentMessageRaw, type CheckResult } from './store';
+import { parseChecksFromMessage, parseRaceStatusFromMessage, getCurrentMessageRaw, type CheckResult } from './store';
 
 const raw = getCurrentMessageRaw();
 const checks = computed<CheckResult[]>(() => parseChecksFromMessage(raw));
+const race = computed(() => parseRaceStatusFromMessage(raw));
+const race_pct = computed(() => {
+  if (!race.value || !race.value.total_distance) return 0;
+  return Math.min(100, Math.max(0, Math.round((race.value.distance / race.value.total_distance) * 100)));
+});
 
 const result_class = (ck: CheckResult) => {
   const map: Record<string, string> = { 大成功: 'crit', 成功: 'succ', 普通失败: 'fail', 大失败: 'fumble' };
@@ -133,6 +149,36 @@ function stage_class(v: number): string {
   color: #fff;
   .ck-title { font-weight: 800; font-size: 0.9rem; i { margin-right: 6px; } }
   .ck-count { font-size: 0.8rem; opacity: 0.92; }
+}
+
+.ck-race {
+  padding: 10px 14px;
+  background: var(--c-surface-alt);
+  border-bottom: 1px solid var(--c-border);
+  .race-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--c-primary-dark);
+    .race-rank { i { margin-right: 6px; color: var(--c-warning); } }
+    .race-dist { i { margin-right: 6px; color: var(--c-warning); } }
+    small { font-size: 0.72rem; font-weight: 400; color: var(--c-muted); margin-left: 4px; }
+  }
+  .race-progress {
+    margin-top: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: var(--c-track);
+    overflow: hidden;
+    .race-bar {
+      height: 100%;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--c-primary), var(--c-primary-dark));
+      transition: width 0.3s ease;
+    }
+  }
 }
 
 .ck-body {

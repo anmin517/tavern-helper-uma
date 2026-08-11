@@ -11,7 +11,15 @@ export type CheckResult = {
   remark: string;
 };
 
+export type RaceStatus = {
+  rank: number; // 当前名次
+  total: number; // 总人数
+  distance: number; // 当前行进距离 (m)
+  total_distance: number; // 赛道总长度 (m)
+};
+
 const BLOCK_RE = /<检定>([\s\S]*?)<\/检定>/gi;
+const RACE_STATUS_RE = /<比赛>([\s\S]*?)<\/比赛>/gi;
 
 /**
  * 从当前消息原文解析全部检定格式块。
@@ -38,6 +46,28 @@ export function parseChecksFromMessage(raw: string): CheckResult[] {
     });
   }
   return blocks;
+}
+
+/**
+ * 从当前消息原文解析比赛状态块 <比赛>名次|总人数|行进距离|总长度</比赛>。
+ * 返回最近一次（消息内最后一个）比赛状态；无则返回 null。
+ */
+export function parseRaceStatusFromMessage(raw: string): RaceStatus | null {
+  if (!raw) return null;
+  const re = new RegExp(RACE_STATUS_RE.source, RACE_STATUS_RE.flags);
+  let m: RegExpExecArray | null;
+  let last: RaceStatus | null = null;
+  while ((m = re.exec(raw)) !== null) {
+    const fields = m[1].split('|').map((s) => s.trim());
+    const [rankRaw = '', totalRaw = '', distRaw = '', totalDistRaw = ''] = fields;
+    last = {
+      rank: Number(rankRaw) || 0,
+      total: Number(totalRaw) || 0,
+      distance: Number(distRaw) || 0,
+      total_distance: Number(totalDistRaw) || 0,
+    };
+  }
+  return last;
 }
 
 /** 获取当前消息楼层被 AI 使用的原文 */

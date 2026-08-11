@@ -10,16 +10,6 @@ export const Schema = z.object({
     周期: z.coerce.number().transform(v => _.clamp(v, 1, 999)).prefault(1),
     日期: z.string().prefault(''),
     当前赛事: z.string().prefault(''),
-    最近检定: z.object({
-      名称: z.string().prefault(''),
-      类型: z.string().prefault(''), // 检定/对抗/成长品质
-      目标值: z.coerce.number().transform(v => _.clamp(v, 0, 9999)).prefault(0),
-      骰值: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-      结果: z.enum(['大成功', '成功', '普通失败', '大失败']).prefault('成功'),
-      修正: z.string().prefault(''), // 修正来源简述（技能/状态/难度）
-      对抗阶段: z.enum(['前', '中', '后', '']).prefault(''),
-      备注: z.string().prefault(''),
-    }).prefault({ 名称: '', 类型: '', 目标值: 0, 骰值: 0, 结果: '成功', 修正: '', 对抗阶段: '', 备注: '' }),
   }).prefault({}),
 
   主角: z.object({
