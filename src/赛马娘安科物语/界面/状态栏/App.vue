@@ -454,6 +454,7 @@ function stageClass(v: number): string {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  background: var(--c-surface);
 }
 
 .sb-tabs {

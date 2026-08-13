@@ -30,9 +30,13 @@ body {
   color: var(--c-ink);
   font-size: 13px;
   line-height: 1.45;
-  background: transparent;
+  /* 明亮主题：明确不透明背景，避免透出酒馆暗色主题 */
+  background: var(--c-surface);
 }
 
 #app {
   width: 100%;
+  min-height: 100vh;
+  background: var(--c-surface);
+  color: var(--c-ink);
 }
