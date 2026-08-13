@@ -424,7 +424,7 @@ function stageClass(v: number): string {
   transition: width 0.35s ease;
   &.stamina { background: linear-gradient(90deg, var(--c-primary), #4caf7d); }
   &.spirit { background: linear-gradient(90deg, var(--c-warning), #ffb703); }
-  &.bond { background: linear-gradient(90deg, #e76f51, var(--c-danger)); }
+  &.bond { background: linear-gradient(90deg, var(--c-stat-speed), var(--c-danger)); }
 }
 
 .bar-value {
@@ -511,9 +511,9 @@ function stageClass(v: number): string {
     font-size: 0.82rem;
     padding: 2px 9px;
     border-radius: 10px;
-    &.deep { background: #d9f2e4; color: #1e7a50; }
-    &.mid { background: #fdeeda; color: #b06e1a; }
-    &.low { background: #e6f1fb; color: #185fa5; }
+    &.deep { background: #e6f5ef; color: #1f6e42; }
+    &.mid { background: #fdf0dc; color: #b06e1a; }
+    &.low { background: #e6f2f8; color: #185fa5; }
     &.cold { background: var(--c-track); color: var(--c-muted); }
   }
 }
@@ -535,10 +535,11 @@ function stageClass(v: number): string {
   font-weight: 600;
   padding: 2px 8px;
   border-radius: 8px;
-  background: var(--c-track);
+  background: var(--c-surface-alt);
+  border: 1px solid var(--c-border);
   color: var(--c-muted);
   em { font-style: normal; font-family: var(--font-num); font-weight: 700; margin-left: 3px; }
-  &.high { background: #d9f2e4; color: #1e7a50; }
+  &.high { background: #e6f5ef; border-color: #bfe3d3; color: #1f6e42; }
 }
 
 .rel-noskills {
@@ -597,11 +598,11 @@ function stageClass(v: number): string {
   height: 100%;
   border-radius: 5px;
   transition: width 0.35s ease;
-  &.速度 { background: linear-gradient(90deg, #ef476f, #ff5d8f); }
-  &.耐力 { background: linear-gradient(90deg, #118ab2, #48cae4); }
-  &.力量 { background: linear-gradient(90deg, #e07a5f, #f4a261); }
-  &.毅力 { background: linear-gradient(90deg, #6d6875, #9a8c98); }
-  &.智慧 { background: linear-gradient(90deg, #457b9d, #a8dadc); }
+  &.速度 { background: linear-gradient(90deg, var(--c-stat-speed), #ef9a8f); }
+  &.耐力 { background: linear-gradient(90deg, var(--c-stat-stamina), #7fbfdd); }
+  &.力量 { background: linear-gradient(90deg, var(--c-stat-power), #f2c078); }
+  &.毅力 { background: linear-gradient(90deg, var(--c-stat-grit), #b3a7d0); }
+  &.智慧 { background: linear-gradient(90deg, var(--c-stat-intel), #7ccdb4); }
 }
 
 .stat-value {
@@ -689,7 +690,7 @@ function stageClass(v: number): string {
 .skill-fill {
   height: 100%;
   border-radius: 5px;
-  background: linear-gradient(90deg, #8d99ae, var(--c-muted));
+  background: linear-gradient(90deg, var(--c-muted), #a9b3c2);
   transition: width 0.35s ease;
   &.high { background: linear-gradient(90deg, var(--c-primary), #4caf7d); }
 }
@@ -791,8 +792,8 @@ function stageClass(v: number): string {
   font-family: var(--font-num);
   font-weight: 700;
   font-size: 0.8rem;
-  &.pos { background: #d8f3dc; color: var(--c-primary-dark); }
-  &.neg { background: #f8d7da; color: var(--c-danger); }
+  &.pos { background: #e6f5ef; color: var(--c-primary-dark); }
+  &.neg { background: #fbe9e4; color: var(--c-danger); }
   &.neu { background: var(--c-track); color: var(--c-muted); }
 }
 

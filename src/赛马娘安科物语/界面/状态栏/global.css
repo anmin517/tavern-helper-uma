@@ -24,6 +24,13 @@
   --c-status-injured: #e63946;
   --c-status-low: #d9a441;
 
+  /* 五维语义色板（柔和明亮、统一于草坪绿自然色系） */
+  --c-stat-speed: #e0705f;   /* 速度：珊瑚 */
+  --c-stat-stamina: #4a9dc6; /* 耐力：晴空蓝 */
+  --c-stat-power: #e8a24a;   /* 力量：暖橙 */
+  --c-stat-grit: #8f7fb5;    /* 毅力：藤紫 */
+  --c-stat-intel: #4cae8f;   /* 智慧：薄荷绿 */
+
   /* 字体 */
   --font-ui: 'Sarasa Gothic SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   --font-num: 'JetBrains Mono', 'Consolas', monospace;

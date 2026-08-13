@@ -1,15 +1,21 @@
 :root {
-  --c-primary: #2e9e6b;
-  --c-primary-dark: #1e7a50;
-  --c-danger: #d64545;
-  --c-warning: #e8a13c;
-  --c-success: #2e9e6b;
-  --c-surface: #f7f5ef;
-  --c-surface-alt: #fffdf7;
-  --c-border: #ddd6c8;
-  --c-track: #e8e2d4;
-  --c-muted: #8b8578;
-  --font-num: 'Consolas', 'Courier New', monospace;
+  /* 语义配色 —— 特雷森赛道日（与状态栏统一） */
+  --c-primary: #2e8b57; /* 特雷森草坪：主色、进度条、激活态 */
+  --c-primary-dark: #1f6e42; /* 深草坪：按压、边框 */
+  --c-danger: #e63946; /* 冲刺热血/伤病警告：低体力、受伤、大失败 */
+  --c-warning: #f4a261; /* 夕阳与奖杯：干劲、羁绊、中段警告 */
+  --c-success: #2e8b57; /* 成功/大成功 */
+  --c-gold: #d9a441; /* 粉丝数、等级徽标 */
+  --c-surface: #fdfbf7; /* 晴空纸面：卡片背景 */
+  --c-surface-alt: #f4f1e9; /* 次级区块背景 */
+  --c-ink: #2b2d42; /* 训练笔记墨蓝：主文字 */
+  --c-muted: #8d99ae; /* 灰蓝：辅助文字 */
+  --c-track: #e9e4d8; /* 跑道底色：进度条轨道 */
+  --c-border: #d5cfc0; /* 沙色边框 */
+
+  /* 字体 */
+  --font-ui: 'Sarasa Gothic SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --font-num: 'JetBrains Mono', 'Consolas', monospace;
 }
 
 * {
@@ -18,7 +24,15 @@
   padding: 0;
 }
 
+html,
 body {
-  font-family: 'Sarasa Gothic', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: var(--font-ui);
+  color: var(--c-ink);
+  font-size: 13px;
+  line-height: 1.45;
   background: transparent;
+}
+
+#app {
+  width: 100%;
 }

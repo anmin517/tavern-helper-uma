@@ -248,8 +248,8 @@ function stage_class(v: number): string {
     font-weight: 700;
     padding: 3px 10px;
     border-radius: 8px;
-    &.pos { background: #d9f2e4; color: #1e7a50; }
-    &.neg { background: #fbe3e3; color: #b13a3a; }
+    &.pos { background: #e6f5ef; color: #1f6e42; }
+    &.neg { background: #fbe9e4; color: #c0463f; }
     &.neu { background: var(--c-track); color: var(--c-muted); }
   }
   .stage-total {
